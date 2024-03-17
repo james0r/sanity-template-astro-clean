@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getPages, getPage } from '../utils/sanity'
+import PTExtended from '../components/portabletext/PTExtended.astro'
+import { urlFor } from '../utils/image'
+
+export const prerender = true
+
+export async function getStaticPaths() {
+  const posts = await getPages()
+  return posts.map((page) => ({
+    params: { slug: page.slug.current },
+  }))
+}
+
+const { slug } = Astro.params
+const { title, featuredImage, body } = await getPage(slug)
+---
+
+<Layout>
+  <section>
+    {title && <h1 class="tw-text-4xl tw-font-bold">{title}</h1>}
+    {
+      featuredImage && (
+        <img
+          src={urlFor(featuredImage).width(800).url()}
+          alt={featuredImage.alt}
+          class="tw-mt-4 tw-mb-8"
+        />
+      )
+    }
+    {
+      body && (
+        <div class="tw-prose tw-max-w-none">
+          <PTExtended value={body} />
+        </div>
+      )
+    }
+  </section>
+</Layout>

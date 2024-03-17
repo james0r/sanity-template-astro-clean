@@ -1,5 +1,6 @@
 import { sanityClient } from "sanity:client";
 import groq from "groq";
+
 export async function getPosts() {
   return await sanityClient.fetch(
     groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
@@ -14,13 +15,41 @@ export async function getPost(slug) {
   );
 }
 
+export async function getPages() {
+  return await sanityClient.fetch(
+    groq`*[_type == "page" && defined(slug.current)] | order(_createdAt desc)`,
+  );
+}
+
+export async function getPage(slug) {
+  return await sanityClient.fetch(
+    groq`*[_type == "page" && slug.current == $slug][0]`,
+    {
+      slug,
+    },
+  );
+}
+
 export async function getSettings() {
   return await sanityClient.fetch(
     groq`*[_type == 'settings'][0] {
-      "headerNavigationItems": header.headerNavigation->items[] {
-        "title": title,
-        "slug": select(internalLink != null => internalLink->slug.current),
-        "url": select(externalLink != null => externalLink->url)
+      _type,
+      footer {
+        copyrightLineText
+      },
+      header {
+        headerNavigation->{
+          title,
+          "navId": navId.current,
+          "links": links[] {
+            ...,
+            "reference": reference->{
+              _type,
+              title,
+              "slug": slug.current
+            }
+          }
+        }
       }
     }`,
   );
