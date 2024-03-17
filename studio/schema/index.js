@@ -22,8 +22,8 @@ import seo from "./objects/global/seo";
 import social from "./objects/global/social";
 import notFound from "./objects/global/notFound";
 
-import internalLink from "./objects/internalLink";
-import externalLink from "./objects/externalLink";
+import internalLink from "./objects/global/internalLink";
+import externalLink from "./objects/global/externalLink";
 
 const objects = [
   header,

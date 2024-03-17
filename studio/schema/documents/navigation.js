@@ -14,7 +14,7 @@ export default {
       title: "Navigation Id"
     },
     {
-      name: 'items',
+      name: 'links',
       title: 'Links',
       type: 'array',
       of: [

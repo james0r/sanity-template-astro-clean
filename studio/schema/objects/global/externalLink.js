@@ -19,5 +19,11 @@ export default defineField({
       title: 'URL',
       type: 'url'
     }),
+    defineField(    {
+      title: 'Open in a new window?',
+      name: 'newWindow',
+      type: 'boolean',
+      initialValue: true,
+    })
   ],
 });
