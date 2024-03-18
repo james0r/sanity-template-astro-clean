@@ -30,6 +30,15 @@ export async function getPage(slug) {
   );
 }
 
+export async function getPagePreview(draftId) {
+  return await sanityClient.fetch(
+    groq`*[_type == "page" && _id == $draftId][0]`,
+    {
+      draftId,
+    },
+  );
+}
+
 export async function getSettings() {
   return await sanityClient.fetch(
     groq`*[_type == 'settings'][0] {

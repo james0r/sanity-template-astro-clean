@@ -1,0 +1,21 @@
+---
+import { getPagePreview } from '../../utils/sanity'
+
+export const prerender = false
+
+const draftId = Astro.url.searchParams.get('draftId')! || '';
+
+const { documentType } = Astro.params
+
+const page = await getPagePreview(draftId)
+
+console.log(draftId)
+---
+
+<div>
+  Draft ID: {draftId}
+  Document Type: {documentType}
+
+  <h2>Page Results</h2>
+  <pre>{JSON.stringify(page, null, 2)}</pre>
+</div>

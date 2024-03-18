@@ -3,6 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { structure } from './structure';
 import { schemaTypes } from "./schema";
+import { customDocumentActions } from './plugins/customDocumentActions';
 
 export default defineConfig({
   name: 'default',
@@ -13,7 +14,8 @@ export default defineConfig({
 
   plugins: [
     structureTool({ structure }),
-    visionTool()
+    visionTool(),
+    customDocumentActions()
   ],
 
   schema: {
