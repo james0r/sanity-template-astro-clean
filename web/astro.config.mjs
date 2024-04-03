@@ -27,7 +27,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: "hybrid",
-  adapter: cloudflare(),
+  adapter: vercel(),
   devToolbar: {
     enabled: false
   },
@@ -37,9 +37,12 @@ export default defineConfig({
     useCdn: false,
     // `false` if you want to ensure fresh data
     apiVersion: "2023-03-20"
-  }), react(), alpinejs({
+  }),
+  react(),
+  alpinejs({
     entrypoint: '/src/alpine'
-  }), tailwind({
+  }), 
+  tailwind({
     nesting: true
   })]
 });
