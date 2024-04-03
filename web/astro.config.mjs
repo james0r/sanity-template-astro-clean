@@ -19,14 +19,15 @@ import react from "@astrojs/react";
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
 import vercel from "@astrojs/vercel/serverless";
 import alpinejs from "@astrojs/alpinejs";
-
 import tailwind from "@astrojs/tailwind";
+
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: "hybrid",
-  adapter: vercel(),
+  adapter: cloudflare(),
   devToolbar: {
     enabled: false
   },
@@ -35,10 +36,10 @@ export default defineConfig({
     dataset,
     useCdn: false,
     // `false` if you want to ensure fresh data
-    apiVersion: "2023-03-20",
+    apiVersion: "2023-03-20"
   }), react(), alpinejs({
     entrypoint: '/src/alpine'
   }), tailwind({
-    nesting: true,
+    nesting: true
   })]
 });
