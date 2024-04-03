@@ -4,6 +4,8 @@ import { formatDate } from "@/utils";
 import { urlFor } from "@/utils/image"
 
 const { mainImage, title, excerpt, _createdAt, body } = Astro.props
+
+export const prerender = false
 ---
 
 <section class="post">
