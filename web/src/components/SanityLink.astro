@@ -1,0 +1,30 @@
+---
+const { link } = Astro.props
+
+const urlResolver = (link) => {
+  if (link.reference) {
+    if (link.reference._type === 'page') {
+      return `/${link.reference.slug}`
+    } else {
+      return `/${link.reference._type}/${link.reference.slug}`
+    }
+  }
+}
+
+const url = urlResolver(link)
+---
+{
+  link.reference ? (
+  <li>
+    <a href={url}>
+      {link.reference.title}
+    </a>
+  </li>
+  ) : (
+  <li>
+    <a href={link.url} target={link.newWindow ? '_blank' : '_self'}>
+      {link.title}  
+    </a>
+  </li>
+  )  
+}

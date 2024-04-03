@@ -35,7 +35,7 @@ export default defineConfig({
     dataset,
     useCdn: false,
     // `false` if you want to ensure fresh data
-    apiVersion: "2023-03-20"
+    apiVersion: "2023-03-20",
   }), react(), alpinejs({
     entrypoint: '/src/alpine'
   }), tailwind({

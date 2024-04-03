@@ -13,6 +13,6 @@ export const resolveDocumentActions = (prev, { schemaType }) => {
 export const customDocumentActions = definePlugin({
   name: 'custom-document-actions',
   document: {
-    productionUrl: 'https://starx.vercel.app',
-  }
+    actions: resolveDocumentActions,
+  },
 })

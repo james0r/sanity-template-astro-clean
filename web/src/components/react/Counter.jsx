@@ -13,7 +13,7 @@ function Counter() {
 
  return (
     <div>
-      <h1 className="tw-text-red-500">Counter: {count}</h1>
+      <h1 className="text-red-500">Counter: {count}</h1>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
     </div>

@@ -1,52 +1,37 @@
 ---
-import PTExtended from "../../components/portabletext/PTExtended.astro"
-import Layout from "../../layouts/Layout.astro";
-import { formatDate } from "../../utils";
-import { urlFor } from "../../utils/image";
-import { getPost, getPosts } from "../../utils/sanity";
+import PTExtended from "@/components/portabletext/PTExtended.astro"
+import { formatDate } from "@/utils";
+import { urlFor } from "@/utils/image"
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug.current },
-  }));
-}
-
-const { slug } = Astro.params 
-
-const post = await getPost(slug);
+const { mainImage, title, excerpt, _createdAt, body } = Astro.props
 ---
 
-<Layout title={post.title!}>
-  <section class="post">
-    {
-      post.mainImage ? (
-        <img
-          class="post__cover"
-          src={urlFor(post.mainImage).width(1000).url()}
-          alt="Cover image"
-        />
-      ) : (
-        <div class="post__cover--none" />
-      )
-    }
-    <div class="post__container">
-      <h1 class="post__title">{post.title}</h1>
-      <p class="post__excerpt">{post.excerpt}</p>
-      <p class="post__date">
-        {formatDate(post._createdAt)}
-      </p>
-      <div class="post__content tw-font-serif">
-        <PTExtended value={post.body} />
-      </div>
-      <div x-data x-intersect="console.log('intersected')">
-        Intersect
-      </div>
+<section class="post">
+  {
+    mainImage ? (
+      <img
+        class="post__cover"
+        src={urlFor(mainImage).width(1000).url()}
+        alt="Cover image"
+      />
+    ) : (
+      <div class="post__cover--none" />
+    )
+  }
+  <div class="post__container">
+    <h1 class="post__title">{title}</h1>
+    <p class="post__excerpt">{excerpt}</p>
+    <p class="post__date">
+      {formatDate(_createdAt)}
+    </p>
+    <div class="post__content font-serif">
+      <PTExtended value={body} />
     </div>
-  </section>
-</Layout>
+    <div x-data x-intersect="console.log('intersected')">
+      Intersect
+    </div>
+  </div>
+</section>
 
 <style>
   .post {

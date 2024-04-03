@@ -1,11 +1,19 @@
 import { sanityClient } from "sanity:client";
 import groq from "groq";
 
+const sanityAuthClient = sanityClient.withConfig(
+  { 
+    token: import.meta.env.SANITY_API_TOKEN, 
+    useCdn: false
+  }
+);
+
 export async function getPosts() {
   return await sanityClient.fetch(
     groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
   );
 }
+
 export async function getPost(slug) {
   return await sanityClient.fetch(
     groq`*[_type == "post" && slug.current == $slug][0]`,
@@ -30,12 +38,12 @@ export async function getPage(slug) {
   );
 }
 
-export async function getPagePreview(draftId) {
-  return await sanityClient.fetch(
-    groq`*[_type == "page" && _id == $draftId][0]`,
+export async function getDraft(draftId) {
+  return await sanityAuthClient.fetch(
+    groq`*[_id == $draftId][0]`,
     {
       draftId,
-    },
+    }
   );
 }
 

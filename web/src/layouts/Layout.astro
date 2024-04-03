@@ -4,10 +4,11 @@ import { ViewTransitions } from 'astro:transitions'
 import '@fontsource-variable/inter'
 import '@fontsource-variable/bitter'
 import { getSettings } from '../utils/sanity'
+import SanityLink from '../components/SanityLink.astro'
+import LoadingIndicator from "astro-loading-indicator/component"
 
 const { title } = Astro.props
 const settings = await getSettings()
-
 ---
 
 <!doctype html>
@@ -30,33 +31,25 @@ const settings = await getSettings()
 
     <title>{title}</title>
     <ViewTransitions />
+    <LoadingIndicator 
+      color="#7e22ce"
+      height="2px"
+    />
   </head>
   <body>
-    <div class="tw-px-6 sm:tw-px-8">
-      <div class="tw-container">
+    <div class="px-6 sm:px-8">
+      <div class="container">
         <header class="header">
           <a
-            class="tw-font-bold tw-text-2xl"
+            class="font-bold text-2xl"
             href="/"
             >STARX</a
           >
-          <ul class="tw-flex tw-items-center tw-mx-4 tw-font-medium tw-gap-x-4 tw-uppercase tw-tracking-wide">
+          <ul class="flex items-center mx-4 font-medium gap-x-4 uppercase tracking-wide">
             {
-              settings?.header?.headerNavigation?.links.map(
+              settings?.header?.headerNavigation?.links?.map(
                 (link) => (
-                 link.reference ? (
-                  <li>
-                    <a href={`/${link.reference.slug}`}>
-                      {link.reference.title}
-                    </a>
-                  </li>
-                 ) : (
-                  <li>
-                    <a href={link.url} target={link.newWindow ? '_blank' : '_self'}>
-                      {link.title}  
-                    </a>
-                  </li>
-                 )  
+                  <SanityLink link={link} />
                 )
               )
             }

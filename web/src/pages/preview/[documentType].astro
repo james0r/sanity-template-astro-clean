@@ -1,21 +1,29 @@
 ---
-import { getPagePreview } from '../../utils/sanity'
+import { getDraft } from '../../utils/sanity'
+import Layout from '../../layouts/Layout.astro'
+import PageView from '../../components/views/PageView.astro'
+import PostView from '../../components/views/PostView.astro'
+import FourOhFour from '../../components/views/404.astro'
 
 export const prerender = false
-
 const draftId = Astro.url.searchParams.get('draftId')! || '';
-
 const { documentType } = Astro.params
+const props = await getDraft(draftId)
 
-const page = await getPagePreview(draftId)
+let ViewToRender = null
 
-console.log(draftId)
+switch (documentType) {
+  case 'page':
+    ViewToRender = PageView
+    break
+  case 'post':
+    ViewToRender = PostView
+    break
+  default:
+    ViewToRender = FourOhFour
+}
 ---
 
-<div>
-  Draft ID: {draftId}
-  Document Type: {documentType}
-
-  <h2>Page Results</h2>
-  <pre>{JSON.stringify(page, null, 2)}</pre>
-</div>
+<Layout>
+  <ViewToRender {...props} />
+</Layout>

@@ -17,7 +17,6 @@ export default defineConfig({
     visionTool(),
     customDocumentActions()
   ],
-
   schema: {
     types: schemaTypes,
   },

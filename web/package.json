@@ -26,6 +26,7 @@
     "@types/react-dom": "18.2.19",
     "alpinejs": "^3.13.7",
     "astro": "4.4.1",
+    "astro-loading-indicator": "^0.3.0",
     "astro-portabletext": "0.9.6",
     "autoprefixer": "10.4.17",
     "groq": "3.30.0",

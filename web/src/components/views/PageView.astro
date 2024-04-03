@@ -1,0 +1,25 @@
+---
+import PTExtended from '../../components/portabletext/PTExtended.astro'
+import { urlFor } from '../../utils/image'
+const { title, featuredImage, body } = Astro.props
+---
+
+<section>
+  {title && <h1 class="text-4xl font-bold">{title}</h1>}
+  {
+    featuredImage && (
+      <img
+        src={urlFor(featuredImage).width(800).url()}
+        alt={featuredImage.alt}
+        class="mt-4 mb-8"
+      />
+    )
+  }
+  {
+    body && (
+      <div class="prose max-w-none">
+        <PTExtended value={body} />
+      </div>
+    )
+  }
+</section>
