@@ -11,6 +11,8 @@ const draftId = Astro.url.searchParams.get('draftId')! || '';
 const { documentType } = Astro.params
 const props = await getDraft(draftId)
 
+console.log('props', props)
+
 let ViewToRender = null
 
 switch (documentType) {
