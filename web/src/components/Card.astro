@@ -1,8 +1,9 @@
 ---
-import { formatDate } from "../utils";
-import { urlFor } from "../utils/image";
+import { formatDate } from '../utils'
+import { urlFor } from '../utils/image'
+import { truncateTextWithEllipsis } from '@/utils'
 
-const { post } = Astro.props;
+const { post } = Astro.props
 ---
 
 <div class="md:flex">
@@ -28,7 +29,7 @@ const { post } = Astro.props;
         {post.title}
       </a>
     </h3>
-    <p class="">{post.excerpt}</p>
+    <p class="">{truncateTextWithEllipsis(post.excerpt, 100)}</p>
     <p class="text-sm mt-2">
       {formatDate(post._createdAt)}
     </p>

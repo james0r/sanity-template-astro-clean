@@ -1,23 +1,22 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { getPost, getPosts } from "../../utils/sanity";
-import PostView from "../../components/views/PostView.astro";
+import Layout from '../../layouts/Layout.astro'
+import { getPost, getPosts } from '../../utils/sanity'
+import PostView from '../../components/views/PostView.astro'
 
-export const prerender = true;
+export const prerender = true
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  const posts = await getPosts()
   return posts.map((post) => ({
     params: { slug: post.slug.current },
-  }));
+  }))
 }
 
-const { slug } = Astro.params 
+const { slug } = Astro.params
 
-const props = await getPost(slug);
+const props = await getPost(slug)
 ---
 
 <Layout title={props.title!}>
   <PostView {...props} />
 </Layout>
-

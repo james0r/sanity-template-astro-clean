@@ -4,6 +4,8 @@ import { visionTool } from '@sanity/vision'
 import { structure } from './structure';
 import { schemaTypes } from "./schema";
 import { customDocumentActions } from './plugins/customDocumentActions';
+import { assist } from '@sanity/assist'
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 
 export default defineConfig({
   name: 'default',
@@ -15,7 +17,9 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool(),
-    customDocumentActions()
+    customDocumentActions(),
+    assist(),
+    unsplashImageAsset()
   ],
   schema: {
     types: schemaTypes,

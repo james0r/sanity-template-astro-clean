@@ -11,3 +11,10 @@ export function formatDate(date) {
 export function tw(...classes) {
   return twMerge(classes);
 }
+
+export function truncateTextWithEllipsis(text, maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.slice(0, maxLength) + '...';
+}

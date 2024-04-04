@@ -1,7 +1,7 @@
 ---
-import PTExtended from "@/components/portabletext/PTExtended.astro"
-import { formatDate } from "@/utils";
-import { urlFor } from "@/utils/image"
+import PTExtended from '@/components/portabletext/PTExtended.astro'
+import { formatDate } from '@/utils'
+import { urlFor } from '@/utils/image'
 
 const { mainImage, title, excerpt, _createdAt, body } = Astro.props
 
@@ -30,10 +30,13 @@ export const prerender = false
     <p class="my-2 text-sm">
       {formatDate(_createdAt)}
     </p>
-    <div class="font-serif prose max-w-none">
+    <div class="font-serif prose max-w-none mt-10">
       <PTExtended value={body} />
     </div>
-    <div x-data x-intersect="console.log('intersected')">
+    <div
+      x-data
+      x-intersect="console.log('intersected')"
+    >
       Intersect
     </div>
   </div>
