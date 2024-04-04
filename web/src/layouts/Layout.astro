@@ -6,13 +6,16 @@ import '@fontsource-variable/bitter'
 import { getSettings } from '../utils/sanity'
 import SanityLink from '../components/SanityLink.astro'
 import LoadingIndicator from "astro-loading-indicator/component"
+import { tw } from '@/utils'
 
 const { title } = Astro.props
 const settings = await getSettings()
+
+const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
 ---
 
 <!doctype html>
-<html lang="en" class="test">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -36,7 +39,7 @@ const settings = await getSettings()
       height="2px"
     />
   </head>
-  <body>
+  <body class={tw(debugClasses)}>
     <div class="px-6 sm:px-8">
       <div class="container">
         <header class="header flex items-center py-4">
@@ -64,14 +67,6 @@ const settings = await getSettings()
       </div>
     </div>
     <style>
-      .container {
-        margin: 0 auto;
-      }
-
-      main {
-        margin-top: 45px;
-      }
-
       .footer {
         display: flex;
         justify-content: flex-end;
