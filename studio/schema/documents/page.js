@@ -36,7 +36,7 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      media: "mainImage",
+      media: "featuredImage",
     }
   },
 });
