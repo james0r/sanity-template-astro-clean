@@ -11,6 +11,7 @@ interface Props {
   }
   settings?: {
     seo?: {
+      metaTitle?: string
       metaDescription?: string
       openGraphImage?: {
         asset: {
@@ -24,7 +25,7 @@ interface Props {
 
 const { description, image, settings } = Astro.props
 
-let ogImageUrl = '/starx-site-og-image.jpg'
+let ogImageUrl = `https://dummyimage.com/1200x630/000/fff.jpg&text=${settings?.seo?.metaTitle || 'Astro'}`
 let ogImageDimensions = { width: 1200, height: 630 }
 
 if (image) {

@@ -18,3 +18,19 @@ export function truncateTextWithEllipsis(text, maxLength) {
   }
   return text.slice(0, maxLength) + '...';
 }
+
+export function getTextExcerpt(portableText) {
+  let excerpt = '';
+
+  portableText.forEach(block => {
+    if (block._type === 'block' && block.children) {
+      block.children.forEach(child => {
+        if (child._type === 'span' && child.text) {
+          excerpt += child.text;
+        }
+      });
+    }
+  });
+
+  return truncateTextWithEllipsis(excerpt, 160);
+}

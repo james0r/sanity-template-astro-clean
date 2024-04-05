@@ -10,6 +10,13 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+      rows: 4,
+      description: "This description populates meta-tags on the webpage. Approximately 150 characters is recommended.",
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",

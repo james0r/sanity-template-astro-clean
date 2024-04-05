@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import { getPages, getPage } from '../utils/sanity'
 
 import PageView from '../components/views/PageView.astro'
-import { truncateTextWithEllipsis } from '@/utils'
+import { getTextExcerpt } from '@/utils'
 
 export const prerender = true
 
@@ -19,10 +19,11 @@ const props = await getPage(slug)
 
 const seo = {
   title: props.title,
+  description: props.description || getTextExcerpt(props.body),
   image: props.featuredImage,
 }
 ---
 
-<Layout title={props.title} seo={seo}>
+<Layout seo={seo}>
   <PageView {...props} />
 </Layout>

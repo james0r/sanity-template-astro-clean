@@ -10,7 +10,6 @@ import { tw } from '@/utils'
 import SEO from '@/components/SEO.astro'
 
 interface Props {
-  title?: string
   seo?: {
     title?: string
     description?: string
@@ -23,8 +22,11 @@ interface Props {
   }
 }
 
-const { title, seo } = Astro.props
+const { seo } = Astro.props
 const settings = await getSettings()
+
+const path = Astro.url.pathname
+const titleText = path === '/' ? `${settings?.seo?.metaTitle}` : `${seo?.title} - ${settings?.seo.metaTitle}`
 
 const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
 ---
@@ -51,7 +53,7 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
       settings={settings}
     />
 
-    <title>{title || seo?.title || settings?.seo?.metaTitle}</title>
+    <title>{titleText}</title>
     <ViewTransitions />
     <LoadingIndicator
       color="magenta"
