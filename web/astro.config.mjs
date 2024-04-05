@@ -43,6 +43,7 @@ export default defineConfig({
     entrypoint: '/src/alpine'
   }), 
   tailwind({
-    nesting: true
+    nesting: true,
+    applyBaseStyles: false
   })]
 });
