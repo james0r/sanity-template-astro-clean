@@ -1,10 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getPages, getPage } from '../utils/sanity'
-import PTExtended from '../components/portabletext/PTExtended.astro'
-import { urlFor } from '../utils/image'
 
 import PageView from '../components/views/PageView.astro'
+import { truncateTextWithEllipsis } from '@/utils'
 
 export const prerender = true
 
@@ -17,8 +16,13 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params
 const props = await getPage(slug)
+
+const seo = {
+  title: props.title,
+  image: props.featuredImage,
+}
 ---
 
-<Layout title={props.title}>
+<Layout title={props.title} seo={seo}>
   <PageView {...props} />
 </Layout>

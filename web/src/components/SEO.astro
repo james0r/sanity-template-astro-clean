@@ -1,0 +1,111 @@
+---
+import { urlFor, decodeAssetId } from '@/utils/image'
+
+interface Props {
+  description?: string
+  image?: {
+    asset: {
+      _ref: string
+    }
+    _type: string
+  }
+  settings?: {
+    seo?: {
+      metaDescription?: string
+      openGraphImage?: {
+        asset: {
+          _ref: string
+        }
+        _type: string
+      }
+    }
+  }
+}
+
+const { description, image, settings } = Astro.props
+
+let ogImageUrl = '/starx-site-og-image.jpg'
+let ogImageDimensions = { width: 1200, height: 630 }
+
+if (image) {
+  ogImageUrl = urlFor(image).width(1200).url()
+  const assetMeta = decodeAssetId(image.asset._ref)
+  ogImageDimensions = { width: assetMeta.dimensions.width, height: assetMeta.dimensions.height }
+} else if (settings?.seo?.openGraphImage) {
+  ogImageUrl = urlFor(settings.seo.openGraphImage).width(1200).url()
+  const assetMeta = decodeAssetId(settings.seo.openGraphImage.asset._ref)
+  ogImageDimensions = { width: assetMeta.dimensions.width, height: assetMeta.dimensions.height }
+}
+---
+
+{
+  (description || settings?.seo?.metaDescription) && (
+    <meta
+      name="description"
+      content={description || settings?.seo?.metaDescription}
+    />
+  )
+}
+
+{
+  ogImageUrl && (
+    <meta
+      name="og:image"
+      content={ogImageUrl}
+    />
+  )
+}
+
+{
+  ogImageDimensions?.width && (
+    <meta
+      name="og:image:width"
+      content={ogImageDimensions.width.toString()}
+    />
+  )
+}
+
+{
+  ogImageDimensions?.height && (
+    <meta
+      name="og:image:height"
+      content={ogImageDimensions.height.toString()}
+    />
+  )
+}
+
+{
+  (description || settings?.seo?.metaDescription) && (
+    <meta
+      name="twitter:description"
+      content={description || settings?.seo?.metaDescription}
+    />
+  )
+}
+
+{
+  ogImageUrl && (
+    <meta
+      name="twitter:image"
+      content={ogImageUrl}
+    />
+  )
+}
+
+{
+  ogImageDimensions?.width && (
+    <meta
+      name="twitter:image:width"
+      content={ogImageDimensions.width.toString()}
+    />
+  )
+}
+
+{
+  ogImageDimensions?.height && (
+    <meta
+      name="twitter:image:height"
+      content={ogImageDimensions.height.toString()}
+    />
+  )
+}

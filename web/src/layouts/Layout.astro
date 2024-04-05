@@ -5,10 +5,25 @@ import '@fontsource-variable/inter'
 import '@fontsource-variable/bitter'
 import { getSettings } from '../utils/sanity'
 import SanityLink from '../components/SanityLink.astro'
-import LoadingIndicator from "astro-loading-indicator/component"
+import LoadingIndicator from 'astro-loading-indicator/component'
 import { tw } from '@/utils'
+import SEO from '@/components/SEO.astro'
 
-const { title } = Astro.props
+interface Props {
+  title?: string
+  seo?: {
+    title?: string
+    description?: string
+    image?: {
+      asset: {
+        _ref: string
+      }
+      _type: string
+    }
+  }
+}
+
+const { title, seo } = Astro.props
 const settings = await getSettings()
 
 const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
@@ -31,10 +46,14 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
       name="generator"
       content={Astro.generator}
     />
+    <SEO
+      {...seo}
+      settings={settings}
+    />
 
-    <title>{title}</title>
+    <title>{title || seo?.title || settings?.seo?.metaTitle}</title>
     <ViewTransitions />
-    <LoadingIndicator 
+    <LoadingIndicator
       color="magenta"
       height="3px"
     />
@@ -49,20 +68,14 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
             >STARX</a
           >
           <ul class="flex items-center mx-4 font-medium gap-x-4 uppercase tracking-wide">
-            {
-              settings?.header?.headerNavigation?.links?.map(
-                (link) => (
-                  <SanityLink link={link} />
-                )
-              )
-            }
+            {settings?.header?.headerNavigation?.links?.map((link) => <SanityLink link={link} />)}
           </ul>
         </header>
         <main>
           <slot />
         </main>
         <footer class="footer">
-          <div set:html={settings?.footer?.copyrightLineText}></div>
+          <div set:html={settings?.footer?.copyrightLineText} />
         </footer>
       </div>
     </div>

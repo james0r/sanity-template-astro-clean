@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import { getPost, getPosts } from '../../utils/sanity'
 import PostView from '../../components/views/PostView.astro'
+import { truncateTextWithEllipsis } from '@/utils'
 
 export const prerender = true
 
@@ -15,8 +16,16 @@ export async function getStaticPaths() {
 const { slug } = Astro.params
 
 const props = await getPost(slug)
+const seo = {
+  title: props.title,
+  description: props.excerpt,
+  image: props.featuredImage,
+}
 ---
 
-<Layout title={props.title!}>
+<Layout
+  title={props.title}
+  seo={seo}
+>
   <PostView {...props} />
 </Layout>

@@ -3,17 +3,17 @@ import PTExtended from '@/components/portabletext/PTExtended.astro'
 import { formatDate } from '@/utils'
 import { urlFor } from '@/utils/image'
 
-const { mainImage, title, excerpt, _createdAt, body } = Astro.props
+const { featuredImage, title, excerpt, _createdAt, body } = Astro.props
 
 export const prerender = false
 ---
 
 <section class="">
   {
-    mainImage ? (
+    featuredImage ? (
       <img
         class="aspect-video"
-        src={urlFor(mainImage).width(1000).url()}
+        src={urlFor(featuredImage).width(1000).url()}
         alt="Cover image"
       />
     ) : (

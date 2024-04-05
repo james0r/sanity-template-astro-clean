@@ -51,6 +51,7 @@ export async function getSettings() {
   return await sanityClient.fetch(
     groq`*[_type == 'settings'][0] {
       _type,
+      seo,
       footer {
         copyrightLineText
       },
