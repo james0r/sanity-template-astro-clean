@@ -2,6 +2,7 @@
 import { urlFor, decodeAssetId } from '@/utils/image'
 
 interface Props {
+  title?: string
   description?: string
   image?: {
     asset: {
@@ -23,18 +24,22 @@ interface Props {
   }
 }
 
-const { description, image, settings } = Astro.props
+const { title, description, image, settings } = Astro.props
+const url = Astro.url
 
 let ogImageUrl = `https://dummyimage.com/1200x630/000/fff.jpg&text=${settings?.seo?.metaTitle || 'Astro'}`
 let ogImageDimensions = { width: 1200, height: 630 }
+let ogImageType = 'image/jpeg'
 
 if (image) {
   ogImageUrl = urlFor(image).width(1200).url()
   const assetMeta = decodeAssetId(image.asset._ref)
+  ogImageType = `image/${assetMeta.format.replace('jpg', 'jpeg')}`
   ogImageDimensions = { width: assetMeta.dimensions.width, height: assetMeta.dimensions.height }
 } else if (settings?.seo?.openGraphImage) {
   ogImageUrl = urlFor(settings.seo.openGraphImage).width(1200).url()
   const assetMeta = decodeAssetId(settings.seo.openGraphImage.asset._ref)
+  ogImageType = `image/${assetMeta.format.replace('jpg', 'jpeg')}`
   ogImageDimensions = { width: assetMeta.dimensions.width, height: assetMeta.dimensions.height }
 }
 ---
@@ -43,6 +48,35 @@ if (image) {
   (description || settings?.seo?.metaDescription) && (
     <meta
       name="description"
+      content={description || settings?.seo?.metaDescription}
+    />
+  )
+}
+
+{
+  url && (
+    <meta
+      name="og:url"
+      content={url}
+    />
+  )
+}
+
+<meta property="og:type" content="website">
+
+{
+  title && (
+    <meta
+      name="og:title"
+      content={title}
+    />
+  )
+}
+
+{
+  (description || settings?.seo?.metaDescription) && (
+    <meta
+      name="og:description"
       content={description || settings?.seo?.metaDescription}
     />
   )
@@ -74,6 +108,18 @@ if (image) {
     />
   )
 }
+
+{
+  ogImageType && (
+    <meta
+      name="og:image:type"
+      content={ogImageType}
+    />
+  )
+}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content={url.host}>
 
 {
   (description || settings?.seo?.metaDescription) && (
