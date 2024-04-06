@@ -15,7 +15,7 @@ const seo = {
   title: props.title,
   description: props.excerpt,
   image: props.featuredImage,
-  url: `https://astro.build${Astro.url.pathname}`
+  ogType: documentType === 'post' ? 'article' : 'website'
 }
 
 let ViewToRender = null
@@ -32,6 +32,6 @@ switch (documentType) {
 }
 ---
 
-<Layout title={props.title}>
+<Layout seo={seo}>
   <ViewToRender {...props} />
 </Layout>

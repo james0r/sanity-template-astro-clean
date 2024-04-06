@@ -10,6 +10,7 @@ interface Props {
     }
     _type: string
   }
+  ogType?: string
   settings?: {
     seo?: {
       metaTitle?: string
@@ -24,7 +25,7 @@ interface Props {
   }
 }
 
-const { title, description, image, settings } = Astro.props
+const { title, description, image, settings, ogType } = Astro.props
 const url = Astro.url
 
 let ogImageUrl = `https://dummyimage.com/1200x630/000/fff.jpg&text=${settings?.seo?.metaTitle || 'Astro'}`
@@ -62,7 +63,10 @@ if (image) {
   )
 }
 
-<meta property="og:type" content="website">
+<meta
+  name="og:type"
+  content={ogType ? ogType : 'website'}
+/>
 
 {
   title && (
@@ -118,8 +122,14 @@ if (image) {
   )
 }
 
-<meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content={url.host}>
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+/>
+<meta
+  property="twitter:domain"
+  content={url.host}
+/>
 
 {
   (description || settings?.seo?.metaDescription) && (

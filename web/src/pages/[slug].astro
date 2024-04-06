@@ -8,8 +8,8 @@ import { getTextExcerpt } from '@/utils'
 export const prerender = true
 
 export async function getStaticPaths() {
-  const posts = await getPages()
-  return posts.map((page) => ({
+  const pages = await getPages()
+  return pages.map((page) => ({
     params: { slug: page.slug.current },
   }))
 }
@@ -21,6 +21,7 @@ const seo = {
   title: props.title,
   description: props.description || getTextExcerpt(props.body),
   image: props.featuredImage,
+  ogType: 'website',
 }
 ---
 
