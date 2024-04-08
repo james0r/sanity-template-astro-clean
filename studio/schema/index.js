@@ -2,8 +2,9 @@
 import navigation from "./documents/navigation";
 import post from "./documents/post";
 import page from "./documents/page";
+import contact from "./documents/contact";
 
-const documents = [navigation, post, page];
+const documents = [navigation, post, page, contact];
 
 // Singleton Types
 import settings from './singletons/settings'
