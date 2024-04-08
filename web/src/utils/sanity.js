@@ -2,11 +2,11 @@ import { sanityClient } from "sanity:client";
 import groq from "groq";
 
 const sanityAuthClient = sanityClient.withConfig(
-  { 
-    token: import.meta.env.SANITY_API_TOKEN, 
+  {
+    token: import.meta.env.SANITY_API_TOKEN,
     useCdn: false
   }
-);
+)
 
 export async function getPosts() {
   return await sanityClient.fetch(
@@ -70,5 +70,20 @@ export async function getSettings() {
         }
       }
     }`,
+  );
+}
+
+export async function getByTerms(terms) {
+  return await sanityClient.fetch(
+    groq`*[_type in ["post", "page"] && defined(slug.current) && (title match $terms || body[].children[].text match $terms || description match $terms || excerpt match $terms)] {
+      _type,
+      title,
+      "slug": slug.current,
+      "excerpt": coalesce(excerpt, description, ""),
+      "featuredImageUrl": featuredImage.asset->url,
+    } | order(_createdAt desc)`,
+    {
+      terms,
+    },
   );
 }

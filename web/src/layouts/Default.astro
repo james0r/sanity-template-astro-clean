@@ -1,0 +1,107 @@
+---
+import '@/styles/tailwind.css'
+import { ViewTransitions } from 'astro:transitions'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/bitter'
+import { getSettings } from '../utils/sanity'
+import SanityLink from '../components/SanityLink.astro'
+import LoadingIndicator from 'astro-loading-indicator/component'
+import { tw } from '@/utils'
+import SEO from '@/components/SEO.astro'
+
+interface Props {
+  seo?: {
+    title?: string
+    description?: string
+    image?: {
+      asset: {
+        _ref: string
+      }
+      _type: string
+    }
+    ogType?: string
+  }
+}
+
+const { seo } = Astro.props
+const settings = await getSettings()
+
+const path = Astro.url.pathname
+const titleText =
+  path === '/' ? `${settings?.seo?.metaTitle}` : `${seo?.title} - ${settings?.seo.metaTitle}`
+
+const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <SEO
+      {...seo}
+      settings={settings}
+      title={titleText}
+    />
+
+    <title>{titleText}</title>
+    <ViewTransitions />
+    <LoadingIndicator
+      color="magenta"
+      height="3px"
+    />
+  </head>
+  <body class={tw(debugClasses)}>
+    <div class="px-6 sm:px-8">
+      <div class="container">
+        <header class="header flex items-center py-4">
+          <a
+            class="font-bold text-2xl"
+            href="/"
+            >STARX</a
+          >
+          <ul class="flex items-center mx-4 font-medium gap-x-4 uppercase tracking-wide">
+            {
+              settings?.header?.headerNavigation?.links?.map((link) => (
+                <li>
+                  <SanityLink link={link} />
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href="/search"
+                class=""
+                >search</a
+              >
+            </li>
+          </ul>
+        </header>
+        <main>
+          <slot />
+        </main>
+        <footer class="py-4">
+          <div set:html={settings?.footer?.copyrightLineText} />
+        </footer>
+      </div>
+    </div>
+
+    <style is:global>
+      :root {
+        --example-var: 'something';
+      }
+    </style>
+  </body>
+</html>

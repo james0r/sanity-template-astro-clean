@@ -1,0 +1,112 @@
+---
+import Layout from '@/layouts/Default.astro'
+
+export const prerender = true
+
+const seo = {
+  title: 'Search',
+  description: 'Search for posts and pages',
+}
+---
+
+<Layout seo={seo}>
+  <section x-data="search">
+    <h1 class="text-4xl font-bold mb-4">Search</h1>
+    <form>
+      <input
+        @keyup="onInputKeyUp"
+        type="search"
+        placeholder="Search..."
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+    </form>
+    <template x-if="!isFetching">
+      <div>
+        <div
+          x-show="!results.length && terms !== ''"
+          class="py-4"
+        >
+          <p>No results found</p>
+        </div>
+        <div
+          x-show="terms.length === 0"
+          class="py-4"
+        >
+          <p>Start typing to search</p>
+        </div>
+      </div>
+    </template>
+    <template x-if="isFetching">
+      <div class="py-4">
+        <p>Searching...</p>
+      </div>
+    </template>
+    <div x-show="results.length">
+      <ul>
+        <template
+          x-for="result in results"
+          :key="result.slug"
+        >
+          <li>
+            <a
+              :href="result._type === 'post' ? `/post/${result.slug}` : `/${result.slug}`"
+              class="block p-2 border border-gray-300 rounded mt-2"
+            >
+              <h2
+                x-text="result.title"
+                class="text-lg font-bold"
+              >
+              </h2>
+              <p
+                x-text="result.excerpt"
+                class="text-sm"
+              >
+              </p>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('search', function () {
+      return {
+        results: [],
+        userHasInteracted: false,
+        isFetching: false,
+        terms: '',
+        onInputKeyUp(e) {
+          this.userHasInteracted = true
+
+          this.terms = e.target.value.trim()
+
+          if (this.terms === '') {
+            this.results = []
+            return
+          }
+
+          this.isFetching = true
+          fetch(`/search.json?s=${this.terms}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (this.terms === '') {
+                this.results = []
+                return
+              }
+
+              if (data.results.length > 0) {
+                this.results = data.results
+                this.isFetching = false
+              } else {
+                this.results = []
+                this.isFetching = false
+              }
+            })
+        },
+      }
+    })
+  })
+</script>

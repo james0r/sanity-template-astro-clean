@@ -15,16 +15,12 @@ const url = urlResolver(link)
 ---
 {
   link.reference ? (
-  <li>
     <a href={url}>
       {link.reference.title}
     </a>
-  </li>
   ) : (
-  <li>
     <a href={link.url} target={link.newWindow ? '_blank' : '_self'}>
       {link.title}  
     </a>
-  </li>
   )  
 }
