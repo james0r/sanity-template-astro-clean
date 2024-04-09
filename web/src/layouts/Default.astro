@@ -8,7 +8,6 @@ import SanityLink from '../components/SanityLink.astro'
 import LoadingIndicator from 'astro-loading-indicator/component'
 import { tw } from '@/utils'
 import SEO from '@/components/SEO.astro'
-import Alpine from '@/components/Alpine.astro'
 
 interface Props {
   seo?: {
@@ -113,7 +112,7 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
       </div>
     </div>
 
-    <script is:inline type="module">
+    <script type="module" >
       window.Alpine.start();
     </script>
 
