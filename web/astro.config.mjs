@@ -18,9 +18,7 @@ import react from "@astrojs/react";
 // Change this depending on your hosting provider (Vercel, Netlify etc)
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
 import vercel from "@astrojs/vercel/serverless";
-import alpinejs from "@astrojs/alpinejs";
 import tailwind from "@astrojs/tailwind";
-
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
@@ -31,19 +29,18 @@ export default defineConfig({
   devToolbar: {
     enabled: false
   },
-  integrations: [sanityIntegration({
-    projectId,
-    dataset,
-    useCdn: false,
-    // `false` if you want to ensure fresh data
-    apiVersion: "2023-03-20"
-  }),
-  react(),
-  alpinejs({
-    entrypoint: '/src/alpine'
-  }), 
-  tailwind({
-    nesting: true,
-    applyBaseStyles: false
-  })]
+  integrations: [
+    sanityIntegration({
+      projectId,
+      dataset,
+      useCdn: false,
+      // `false` if you want to ensure fresh data
+      apiVersion: "2023-03-20"
+    }),
+    react(),
+    tailwind({
+      nesting: true,
+      applyBaseStyles: false
+    }),
+  ]
 });

@@ -8,6 +8,7 @@ import SanityLink from '../components/SanityLink.astro'
 import LoadingIndicator from 'astro-loading-indicator/component'
 import { tw } from '@/utils'
 import SEO from '@/components/SEO.astro'
+import Alpine from '@/components/Alpine.astro'
 
 interface Props {
   seo?: {
@@ -62,6 +63,11 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
       color="magenta"
       height="3px"
     />
+    <script>
+      import Alpine from 'alpinejs';
+
+      window.Alpine = Alpine;
+    </script>
   </head>
   <body class={tw(debugClasses)}>
     <div class="px-6 sm:px-8">
@@ -70,8 +76,9 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
           <a
             class="font-bold text-2xl"
             href="/"
-            >STARX</a
           >
+            STARX
+          </a>
           <ul class="flex items-center mx-4 font-medium gap-x-4 uppercase tracking-wide">
             {
               settings?.header?.headerNavigation?.links?.map((link) => (
@@ -84,8 +91,16 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
               <a
                 href="/search"
                 class=""
-                >search</a
+                >search
+              </a>
+            </li>
+            <li>
+              <a
+                href="/test"
+                class=""
               >
+                Test
+              </a>
             </li>
           </ul>
         </header>
@@ -97,6 +112,10 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
         </footer>
       </div>
     </div>
+
+    <script is:inline type="module">
+      window.Alpine.start();
+    </script>
 
     <style is:global>
       :root {
