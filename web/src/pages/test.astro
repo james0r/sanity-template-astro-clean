@@ -4,9 +4,13 @@ import Layout from '@/layouts/Default.astro'
 
 <Layout>
   <section>
-    Test page
     <script is:inline data-astro-rerun>
-      console.log('test')
+      if (window.Alpine) {
+        Alpine.data('test', () => ({
+          message: 'Hello, Alpine.js!'
+        }))
+      }
     </script>
+    <div x-data="test"></div>
   </section>
 </Layout>

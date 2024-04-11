@@ -1,6 +1,7 @@
 const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID
 const datasetName = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET
 const token = import.meta.env.SANITY_API_TOKEN
+import nodemailer from 'nodemailer'
 
 export const prerender = false
 
@@ -45,6 +46,23 @@ export const POST: APIRoute = async ({ request }) => {
     .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.error(error))
+
+  // const transporter = nodemailer.createTransport({
+  //   host: "smtp.dreamhost.com",
+  //   port: 465,
+  //   secure: true, // upgrade later with STARTTLS
+  //   auth: {
+  //     user: "username",
+  //     pass: "password",
+  //   },
+  // })
+
+  // await transporter.sendMail({
+  //   from: 'noreply@jamesauble.com',
+  //   to: 'james.auble@gmail.com',
+  //   subject: 'Contact Submission',
+  //   html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
+  // })
 
   return new Response(
     JSON.stringify({

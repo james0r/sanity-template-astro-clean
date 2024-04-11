@@ -31,6 +31,7 @@
     "astro-portabletext": "0.9.7",
     "autoprefixer": "10.4.19",
     "groq": "3.36.4",
+    "nodemailer": "^6.9.13",
     "prettier-plugin-astro": "0.13.0",
     "query-string": "^9.0.0",
     "react": "18.2.0",
