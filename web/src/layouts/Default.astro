@@ -62,11 +62,6 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
       color="magenta"
       height="3px"
     />
-    <script>
-      import Alpine from 'alpinejs';
-
-      window.Alpine = Alpine;
-    </script>
   </head>
   <body class={tw(debugClasses)}>
     <div class="px-6 sm:px-8">
@@ -111,10 +106,6 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
         </footer>
       </div>
     </div>
-
-    <script type="module" >
-      window.Alpine.start();
-    </script>
 
     <style is:global>
       :root {

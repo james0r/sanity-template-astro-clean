@@ -21,6 +21,8 @@ import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
 import cloudflare from "@astrojs/cloudflare";
 
+import alpinejs from "@astrojs/alpinejs";
+
 // https://astro.build/config
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
@@ -42,5 +44,6 @@ export default defineConfig({
       nesting: true,
       applyBaseStyles: false
     }),
+    alpinejs({ entrypoint: '/src/alpine/index' })
   ]
 });
