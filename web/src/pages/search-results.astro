@@ -1,0 +1,50 @@
+---
+import { getPaginatedPostsByTerms, getPaginatedPosts } from '@/utils/sanity'
+import SearchCard from '@/components/SearchCard.astro'
+
+export const prerender = false
+
+const terms = Astro.url.searchParams.get('s')
+const page = parseInt(Astro.url.searchParams.get('page')) || 1
+
+let results = []
+
+if (!terms) {
+  results = await getPaginatedPosts(page, 2)
+} else {
+  results = await getPaginatedPostsByTerms(terms, page, 2)
+}
+---
+
+<html>
+  <head></head>
+  <body>
+    {
+      results.length === 0 && (
+        <div id="search-results">
+          <div class="mt-2">
+            <h2>No results found for "{terms}"</h2>
+          </div>
+        </div>
+      )
+    }
+    {
+      results.length > 0 && (
+        <div id="search-results">
+          {
+            terms && (
+              <div class="mt-2">
+                <h2>Search results for "{terms}"</h2>
+              </div>
+            )
+          }
+          <ul>
+            {results.map((post) => (
+              <SearchCard {...post} />
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </body>
+</html>

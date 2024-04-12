@@ -1,7 +1,10 @@
 ---
 import Layout from '@/layouts/Default.astro'
+import { getPaginatedPosts } from '@/utils/sanity'
+import SearchCard from '@/components/SearchCard.astro'
 
 export const prerender = true
+const posts = await getPaginatedPosts(1, 2)
 
 const seo = {
   title: 'Search',
@@ -15,56 +18,23 @@ const seo = {
     <form @submit="(e) => { e.preventDefault() }">
       <input
         @keyup="onInputKeyUp"
-        type="search"
+        type="text"
         placeholder="Search..."
         class="w-full p-2 border border-gray-300 rounded"
       />
     </form>
-    <template x-if="!isFetching">
-      <div>
-        <div
-          x-show="!results.length && terms !== ''"
-          class="py-4"
-        >
-          <p>No results found</p>
-        </div>
-        <div
-          x-show="terms.length === 0"
-          class="py-4"
-        >
-          <p>Start typing to search</p>
-        </div>
-      </div>
-    </template>
     <template x-if="isFetching">
-      <div class="py-4">
+      <div class="mt-2">
         <p>Searching...</p>
       </div>
     </template>
-    <div x-show="results.length">
+    <div id="search-results">
       <ul>
-        <template
-          x-for="result in results"
-          :key="result.slug"
-        >
-          <li>
-            <a
-              :href="result._type === 'post' ? `/post/${result.slug}` : `/${result.slug}`"
-              class="block p-2 border border-gray-300 rounded mt-2"
-            >
-              <h2
-                x-text="result.title"
-                class="text-lg font-bold"
-              >
-              </h2>
-              <p
-                x-text="result.excerpt"
-                class="text-sm"
-              >
-              </p>
-            </a>
-          </li>
-        </template>
+        {
+          posts.map((post) => (
+            <SearchCard {...post} />
+          ))
+        }
       </ul>
     </div>
   </section>

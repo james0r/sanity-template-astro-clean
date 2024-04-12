@@ -9,10 +9,10 @@ const { post } = Astro.props
 <div class="md:flex">
   <div class="flex-[0_0_50%]">
     {
-      post.mainImage ? (
+      post.featuredImage ? (
         <img
           class=""
-          src={urlFor(post.mainImage).width(500).height(300).url()}
+          src={urlFor(post.featuredImage).width(500).height(300).url()}
           alt="Cover image"
         />
       ) : (
@@ -24,7 +24,7 @@ const { post } = Astro.props
     <h3 class="mb-4">
       <a
         class="text-3xl font-bold"
-        href={`/post/${post.slug.current}`}
+        href={`/post/${post.slug}`}
       >
         {post.title}
       </a>

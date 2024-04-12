@@ -10,6 +10,17 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+        timeFormat: 'HH:mm',
+        timeStep: 15,
+        calendarTodayLabel: 'Today'
+      }
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",

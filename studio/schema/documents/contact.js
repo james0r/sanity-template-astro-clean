@@ -27,10 +27,14 @@ export default defineType({
   preview: {
     select: {
       title: "name",
+      createdAt: "_createdAt",
     },
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
+      const { title, createdAt } = selection;
+      return {
+        title,
+        subtitle: `Created at: ${new Date(createdAt).toLocaleDateString()}`,
+      };
     },
   },
 });

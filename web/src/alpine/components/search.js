@@ -1,6 +1,6 @@
 export default {
   name: 'search',
-  component () {
+  component() {
     return {
       results: [],
       userHasInteracted: false,
@@ -11,28 +11,26 @@ export default {
 
         this.terms = e.target.value.trim()
 
-        if (this.terms === '') {
-          this.results = []
-          return
-        }
-
         this.isFetching = true
-        fetch(`/search.json?s=${this.terms}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (this.terms === '') {
-              this.results = []
-              return
-            }
 
-            if (data.results.length > 0) {
-              this.results = data.results
-              this.isFetching = false
-            } else {
-              this.results = []
-              this.isFetching = false
-            }
+        fetch(`/search-results?s=${this.terms}`)
+          .then((response) => {
+            return response.text()
           })
+          .then((responseText) => {
+            this.isFetching = false
+
+            const html = new DOMParser().parseFromString(responseText, 'text/html')
+            const resultsSource = html.getElementById('search-results')
+            const resultsDestination = document.getElementById('search-results')
+
+            if (resultsSource && resultsDestination) resultsDestination.innerHTML = resultsSource.innerHTML;
+          })
+          .catch((error) => {
+            this.isFetching = false
+
+            console.error('Error:', error);
+          });
       },
     }
   }

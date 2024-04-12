@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
 import queryString from 'query-string'
-import { getByTerms } from '@/utils/sanity'
+import { getPaginatedPostsByTerms } from '@/utils/sanity'
 
 export const prerender = false
 
@@ -16,8 +16,8 @@ export const GET: APIRoute = async ({ params, request }) => {
     })
   }
 
-  const results = await getByTerms(queryParams.s as string)
-
+  const results = await getPaginatedPostsByTerms(queryParams.s as string)
+  
   return new Response(JSON.stringify({
     results: results
   }), {

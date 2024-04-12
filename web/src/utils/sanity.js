@@ -8,15 +8,30 @@ const sanityAuthClient = sanityClient.withConfig(
   }
 )
 
+const postFields = `
+   _id,
+   _type,
+   _createdAt,
+   title,
+   "slug": slug.current,
+   body,
+   excerpt,
+   featuredImage
+`
+
 export async function getPosts() {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+      ${postFields}
+    }`,
   );
 }
 
 export async function getPost(slug) {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && slug.current == $slug][0]`,
+    groq`*[_type == "post" && slug.current == $slug][0]{
+      ${postFields}
+    }`,
     {
       slug,
     },
@@ -73,17 +88,33 @@ export async function getSettings() {
   );
 }
 
-export async function getByTerms(terms) {
+export async function getPaginatedPostsByTerms(terms, page = 1, pageSize = 2) {
+  const offset = (page - 1) * pageSize;
+  const end = page * pageSize;
+
   return await sanityClient.fetch(
-    groq`*[_type in ["post", "page"] && defined(slug.current) && (title match $terms || body[].children[].text match $terms || description match $terms || excerpt match $terms)] {
-      _type,
-      title,
-      "slug": slug.current,
-      "excerpt": coalesce(excerpt, description, ""),
-      "featuredImageUrl": featuredImage.asset->url,
-    } | order(_createdAt desc)`,
+    groq`*[_type in ["post"] && defined(slug.current) && (title match $terms || body[].children[].text match $terms || excerpt match $terms)] | order(_createdAt desc)[$offset...$end] {
+      ${postFields}
+    }`,
     {
       terms,
+      offset,
+      end,
+    },
+  );
+}
+
+export async function getPaginatedPosts(page = 1, pageSize = 2) {
+  const offset = (page - 1) * pageSize;
+  const end = page * pageSize;
+
+  return await sanityClient.fetch(
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)[$offset...$end] {
+      ${postFields}
+    }`,
+    {
+      offset,
+      end,
     },
   );
 }

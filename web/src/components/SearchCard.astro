@@ -1,0 +1,28 @@
+---
+import { urlFor } from '@/utils/image'
+
+const { slug, featuredImage, excerpt, title } = Astro.props
+---
+
+<li>
+  <a
+    href={`/post/${slug}`}
+    class="block sm:flex p-2 border border-gray-300 rounded mt-2 gap-x-4"
+  >
+    <div class="w-full sm:h-[200px] sm:w-[200px] aspect-square rounded-md">
+      <img
+        src={urlFor(featuredImage).width(400).height(400).url()}
+        alt={title}
+        class="w-full h-full object-cover rounded"
+      />
+    </div>
+    <div>
+      <h2 class="text-lg font-bold">
+        {title}
+      </h2>
+      <p class="text-sm">
+        {excerpt}
+      </p>
+    </div>
+  </a>
+</li>

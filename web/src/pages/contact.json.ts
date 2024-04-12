@@ -1,15 +1,13 @@
 const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID
 const datasetName = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET
 const token = import.meta.env.SANITY_API_TOKEN
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 
 export const prerender = false
 
 import type { APIRoute } from "astro"
 
 export const POST: APIRoute = async ({ request }) => {
-
-  console.log(`https://${projectId}.api.sanity.io/v2021-06-07/data/mutate/${datasetName}`)
 
   const data = await request.formData()
   const name = data.get("name")
@@ -47,22 +45,16 @@ export const POST: APIRoute = async ({ request }) => {
     .then(result => console.log(result))
     .catch(error => console.error(error))
 
-  // const transporter = nodemailer.createTransport({
-  //   host: "smtp.dreamhost.com",
-  //   port: 465,
-  //   secure: true, // upgrade later with STARTTLS
-  //   auth: {
-  //     user: "username",
-  //     pass: "password",
-  //   },
-  // })
+  const resend_token = import.meta.env.RESEND_API_TOKEN
 
-  // await transporter.sendMail({
-  //   from: 'noreply@jamesauble.com',
-  //   to: 'james.auble@gmail.com',
-  //   subject: 'Contact Submission',
-  //   html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
-  // })
+  const resend = new Resend(resend_token)
+
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: 'james.auble@gmail.com',
+    subject: 'Starx Contact Submission',
+    html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
+  })
 
   return new Response(
     JSON.stringify({
