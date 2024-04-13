@@ -13,10 +13,11 @@ const postFields = `
    _type,
    _createdAt,
    title,
+   publishedAt,
    "slug": slug.current,
    body,
    excerpt,
-   featuredImage
+   featuredImage,
 `
 
 export async function getPosts() {

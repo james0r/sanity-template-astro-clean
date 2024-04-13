@@ -22,6 +22,7 @@ import tailwind from "@astrojs/tailwind";
 import cloudflare from "@astrojs/cloudflare";
 
 import alpinejs from "@astrojs/alpinejs";
+import htmx from 'astro-htmx';
 
 // https://astro.build/config
 export default defineConfig({
@@ -44,6 +45,7 @@ export default defineConfig({
       nesting: true,
       applyBaseStyles: false
     }),
-    alpinejs({ entrypoint: '/src/alpine/index' })
+    alpinejs({ entrypoint: '/src/alpine/index' }),
+    htmx()
   ]
 });

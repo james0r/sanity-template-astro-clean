@@ -1,0 +1,46 @@
+---
+import Layout from '@/layouts/Default.astro'
+import { getPosts } from '@/utils/sanity'
+import SearchCard from '@/components/SearchCard.astro'
+
+export const prerender = true
+const posts = await getPosts()
+
+const seo = {
+  title: 'Search',
+  description: 'Search for posts and pages',
+}
+---
+
+<Layout seo={seo}>
+  <section x-data="searchStatic">
+    <h1 class="text-4xl font-bold mb-4">Search</h1>
+    <form @submit="(e) => { e.preventDefault() }">
+      <input
+        @keyup="onInputKeyUp"
+        type="text"
+        placeholder="Search..."
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+    </form>
+    <div class="mt-2">
+      <p x-text="message"></p>
+    </div>
+    <div>
+      <ul id="search-results">
+        <template x-for="post in results">
+          <div x-html="post.outerHTML">
+
+          </div>
+        </template>
+      </ul>
+    </div>
+    <template x-ref="all-posts">
+      {
+        posts.length > 0 && posts.map((post) => (
+          <SearchCard {...post} />
+        ))
+      }
+    </template>
+  </section>
+</Layout>
