@@ -27,8 +27,8 @@ export default {
     },
 		extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        serif: ['Bitter', ...defaultTheme.fontFamily.serif],
+        sans: ['Inter Variable', ...defaultTheme.fontFamily.sans],
+        serif: ['Bitter Variable', ...defaultTheme.fontFamily.serif],
       },
     },
 	},
