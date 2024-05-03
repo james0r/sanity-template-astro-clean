@@ -1,0 +1,43 @@
+---
+import '@/styles/tailwind.css'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/bitter'
+import { tw } from '@/utils'
+
+interface Props {
+  title?: string
+}
+
+const { title } = Astro.props
+const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+
+    <title>{title}</title>
+  </head>
+  <body class={tw(debugClasses)}>
+    <div class="px-6 sm:px-8">
+      <div class="container">
+        <main>
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
