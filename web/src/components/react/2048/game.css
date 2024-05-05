@@ -1,6 +1,0 @@
-.tile {
-  width: var(--2048-cell-size);
-  height: var(--2048-cell-size);
-  border-radius: var(--2048-border-radius);
-  transition: transform 0.2s;
-}
