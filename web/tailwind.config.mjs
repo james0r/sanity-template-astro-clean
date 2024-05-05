@@ -28,12 +28,6 @@ export default {
 		extend: {
       colors: {
         'dark-beige': '#B9ADA1',
-        'light-beige': '#CAC1B5',
-        'flint': '#756E66',
-        'bush': '#ECE4DB',
-        'aths-special': '#ECE1CC',
-        'yellow': '#E8D180',
-        'orange': '#E99A6D',
       },
       fontFamily: {
         sans: ['Inter Variable', ...defaultTheme.fontFamily.sans],

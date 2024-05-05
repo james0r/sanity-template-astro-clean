@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-
 import { getRandomEmptyCellLocation, getInitialBoard, maybeMoveTiles } from '@/utils/game'
+import { v4 as uuidv4 } from 'uuid'
 import Tile from './Tile'
 import { tw } from '@/utils'
 import './game.css'
@@ -15,13 +15,7 @@ function Game() {
   const [numTiles, setNumTiles] = useState(initialNumTiles)
   const [score, setScore] = useState(0)
   const [board, setBoard] = useState(getInitialBoard(boardSize))
-  const [tiles, setTiles] = useState([])
-  const [idCounter, setIdCounter] = useState(0)
-  // const boardRef = useRef(board)
-
-  // useEffect(() => {
-  //   boardRef.current = board;
-  // }, [board]);
+  const [flattenedBoard, setFlattenedBoard] = useState([])
 
   const reset = () => {
     setScore(0)
@@ -31,25 +25,51 @@ function Game() {
 
     Array.from({ length: initialNumTiles }, () => {
       const { x, y } = getRandomEmptyCellLocation(newBoard)
-      newBoard[x][y] = { x, y, value: 2, id: idCounter }
+      newBoard[x][y] = {
+        value: 2,
+        id: uuidv4(),
+        classes: [''],
+      }
     })
 
     setBoard(newBoard)
   }
 
   useEffect(() => {
+    const newBoard = board
+      .map((col, x) =>
+        col.map(
+          (cell, y) =>
+            cell && {
+              x,
+              y,
+              value: cell.value,
+              id: cell.id,
+              classes: cell.classes
+            }
+        )
+      )
+      .flat()
+
+    setFlattenedBoard(newBoard)
+  }, [board])
+
+  useEffect(() => {
     reset()
 
     const handleMove = (e) => {
       setBoard((prevBoard) => {
-        let newBoard = [...prevBoard]
+        let newBoard = maybeMoveTiles(prevBoard, e.key)
 
-        return maybeMoveTiles(newBoard, e.key)
+        const { x, y } = getRandomEmptyCellLocation(newBoard)
+        newBoard[x][y] = { 
+          value: 2, 
+          id: uuidv4(),
+          classes: ['scale-in'], 
+        }
+
+        return newBoard
       })
-
-      console.log('boardHandler', board)
-
-      // setBoard((prev) => getInitialBoard(boardSize))
     }
 
     window.addEventListener('keydown', handleMove)
@@ -104,22 +124,22 @@ function Game() {
           data-pieces-overlay
           className={tw(['w-full', 'h-full', 'absolute', 'top-0', 'left-0'])}
         >
-          {board.map((col, x) =>
-            col.map(
-              (cell, y) =>
-                cell && (
-                  <Tile
-                    key={cell.id}
-                    x={x}
-                    y={y}
-                    value={cell.value}
-                    cellSize={cellSize}
-                    borderRadius={borderRadius}
-                    gutterSize={gutterSize}
-                    boardSize={boardSize}
-                  />
-                )
-            )
+          {flattenedBoard.map(
+            (tile) =>
+              tile && (
+                <Tile
+                  key={tile.id}
+                  classes={tile.classes}
+                  x={tile.x}
+                  y={tile.y}
+                  value={tile.value}
+                  cellSize={cellSize}
+                  borderRadius={borderRadius}
+                  gutterSize={gutterSize}
+                  boardSize={boardSize}
+                  id={tile.id}
+                />
+              )
           )}
         </div>
       </div>

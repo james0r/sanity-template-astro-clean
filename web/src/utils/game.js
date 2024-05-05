@@ -29,6 +29,10 @@ export const maybeMoveTiles = (board, direction) => {
             newBoard[x][currentY] = null;
             currentY--;
           }
+          if (currentY > 0 && newBoard[x][currentY - 1] !== null && newBoard[x][currentY - 1].value === newBoard[x][currentY].value) {
+            newBoard[x][currentY - 1].value *= 2;
+            newBoard[x][currentY] = null;
+          }
         }
       }
     }
@@ -43,6 +47,10 @@ export const maybeMoveTiles = (board, direction) => {
             newBoard[x][currentY + 1] = newBoard[x][currentY];
             newBoard[x][currentY] = null;
             currentY++;
+          }
+          if (currentY < newBoard.length - 1 && newBoard[x][currentY + 1] !== null && newBoard[x][currentY + 1].value === newBoard[x][currentY].value) {
+            newBoard[x][currentY + 1].value *= 2;
+            newBoard[x][currentY] = null;
           }
         }
       }
@@ -59,6 +67,10 @@ export const maybeMoveTiles = (board, direction) => {
             newBoard[currentX][y] = null;
             currentX--;
           }
+          if (currentX > 0 && newBoard[currentX - 1][y] !== null && newBoard[currentX - 1][y].value === newBoard[currentX][y].value) {
+            newBoard[currentX - 1][y].value *= 2;
+            newBoard[currentX][y] = null;
+          }
         }
       }
     }
@@ -73,6 +85,10 @@ export const maybeMoveTiles = (board, direction) => {
             newBoard[currentX + 1][y] = newBoard[currentX][y];
             newBoard[currentX][y] = null;
             currentX++;
+          }
+          if (currentX < newBoard.length - 1 && newBoard[currentX + 1][y] !== null && newBoard[currentX + 1][y].value === newBoard[currentX][y].value) {
+            newBoard[currentX + 1][y].value *= 2;
+            newBoard[currentX][y] = null;
           }
         }
       }
