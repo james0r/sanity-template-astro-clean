@@ -12,7 +12,7 @@ import { defineConfig } from "astro/config";
 // Different environments use different variables
 const projectId = PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID;
 const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
-import { sanityIntegration } from "@sanity/astro";
+import sanity from "@sanity/astro";
 import react from "@astrojs/react";
 
 // Change this depending on your hosting provider (Vercel, Netlify etc)
@@ -33,7 +33,7 @@ export default defineConfig({
     enabled: false
   },
   integrations: [
-    sanityIntegration({
+    sanity({
       projectId,
       dataset,
       useCdn: false,
