@@ -22,6 +22,7 @@ import footer from "./objects/global/footer";
 import seo from "./objects/global/seo";
 import social from "./objects/global/social";
 import notFound from "./objects/global/notFound";
+import imageWithAlt from "./objects/global/imageWithAlt";
 
 import internalLink from "./objects/global/internalLink";
 import externalLink from "./objects/global/externalLink";
@@ -33,7 +34,8 @@ const objects = [
   social,
   notFound,
   internalLink,
-  externalLink
+  externalLink,
+  imageWithAlt
 ];
 
 export const schemaTypes = [

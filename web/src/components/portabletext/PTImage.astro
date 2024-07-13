@@ -1,11 +1,12 @@
 ---
 import Image from '../Image.astro'
 
-const { node } = Astro.props
+const { node: { imageWithAlt, alt } } = Astro.props
 ---
 
 <Image
-  {...node}
+  image={imageWithAlt}
+  alt={alt || ''}
   width={400}
   height={300}
   classes="w-full sm:w-auto sm:m-2 sm:float-right"

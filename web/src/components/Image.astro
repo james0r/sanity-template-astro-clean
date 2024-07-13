@@ -2,35 +2,32 @@
 import { urlFor } from '../utils/image'
 
 export interface Props {
-  asset: object
-  alt: string
-  width?: number
-  height?: number
-  style?: string
+  image: any
+  width: number
+  height: number
   classes?: string
+  alt: string
 }
 
 // *todo* defaulting width, per discussion in utils/portableText/Readme
 const {
-  asset,
+  image,
   alt,
-  width = 640,
-  height = 480,
-  style = '',
+  width,
+  height,
   classes = '',
 } = Astro.props
 
-const url = urlFor(Astro.props)
+const url = urlFor(image)
   .width(width)
   .height(height)
   .url()
-
-console.log(Astro.props)
 ---
 
 <img
+  width={width}
+  height={height}
   src={url}
   class={classes}
-  style={style}
   alt={alt}
 />
