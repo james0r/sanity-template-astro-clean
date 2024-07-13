@@ -11,12 +11,25 @@ export interface Props {
 }
 
 // *todo* defaulting width, per discussion in utils/portableText/Readme
-const { asset, alt, width = 640, height = 480, style = '', classes = '' } = Astro.props
-const image = urlFor(asset).width(width).height(height).url()
+const {
+  asset,
+  alt,
+  width = 640,
+  height = 480,
+  style = '',
+  classes = '',
+} = Astro.props
+
+const url = urlFor(Astro.props)
+  .width(width)
+  .height(height)
+  .url()
+
+console.log(Astro.props)
 ---
 
 <img
-  src={image}
+  src={url}
   class={classes}
   style={style}
   alt={alt}

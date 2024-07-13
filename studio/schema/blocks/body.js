@@ -57,6 +57,10 @@ export default defineType({
     }),
     defineArrayMember({
       type: "image",
+      title: "Image",
+      options: {
+        hotspot: true // Enables cropping and hotspot
+      }
     }),
   ],
 });
