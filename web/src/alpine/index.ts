@@ -1,5 +1,6 @@
 import type { Alpine } from 'alpinejs'
 import intersect from '@alpinejs/intersect'
+import collapse from '@alpinejs/collapse'
 
 type AlpineStore = {
   name: string
@@ -13,6 +14,7 @@ type AlpineComponent = {
 
 export default (Alpine: Alpine) => {
   Alpine.plugin(intersect)
+  Alpine.plugin(collapse)
 
   const alpineStores = import.meta.glob('./stores/*.js', { eager: true, import: 'default' }) as Record<string, AlpineStore>
 

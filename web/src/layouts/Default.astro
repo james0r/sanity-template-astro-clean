@@ -8,6 +8,7 @@ import SanityLink from '../components/SanityLink.astro'
 import LoadingIndicator from 'astro-loading-indicator/component'
 import { tw } from '@/utils'
 import SEO from '@/components/SEO.astro'
+import Icon from '@/components/Icon.astro'
 
 interface Props {
   seo?: {
@@ -36,6 +37,11 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      [x-cloak] {
+        display: none;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -66,37 +72,100 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
   <body class={tw(debugClasses)}>
     <div class="px-6 sm:px-8">
       <div class="container">
-        <header class="header flex items-center py-4">
+        <header
+          class:list={['header', 'flex', 'justify-between', 'items-center', 'py-4', 'relative']}
+        >
           <a
             class="font-bold text-2xl"
             href="/"
           >
             STARX
           </a>
-          <ul class="flex items-center mx-4 font-medium gap-x-4 uppercase tracking-wide">
-            {
-              settings?.header?.headerNavigation?.links?.map((link) => (
-                <li>
-                  <SanityLink link={link} />
-                </li>
-              ))
-            }
-            <li>
-              <a
-                href="/search"
-                class=""
-                >search
-              </a>
-            </li>
-            <li>
-              <a
-                href="/htmx"
-                class=""
+          <button
+            x-data
+            aria-controls="header-nav"
+            aria-label="Close Mobile Menu"
+            :aria-expanded="$store.global.isMobileMenuVisible ? 'true' : 'false'"
+            @click="$store.global.openMobileMenu()"
+            x-show="!$store.global.isMobileMenuVisible"
+            class:list={['block', 'sm:hidden', 'ml-auto']}
+            x-cloak
+          >
+            <Icon icon="bars-4" />
+          </button>
+          <button
+            x-data
+            aria-controls="header-nav"
+            aria-label="Open Mobile Menu"
+            :aria-expanded="$store.global.isMobileMenuVisible ? 'true' : 'false'"
+            @click="$store.global.closeMobileMenu()"
+            x-show="$store.global.isMobileMenuVisible"
+            class:list={['block', 'sm:hidden', 'ml-auto']}
+            x-cloak
+          >
+            <Icon icon="x-mark" />
+          </button>
+          <nav>
+            <div
+              x-data
+              x-show="$store.global.isMobileMenuVisible"
+              x-cloak
+              x-collapse
+              id="header-nav"
+              class:list={[
+                'flex',
+                'bg-white',
+                'absolute',
+                'flex-col',
+                'w-full',
+                'left-0',
+                'top-full',
+                'shadow-lg'
+              ]}
+            >
+              <ul
+                class:list={[
+                  'space-y-2',
+                  'py-4',
+                  'border-t',
+                  'items-center',
+                  'sm:border-none',
+                  'sm:py-0',
+                  'sm:w-auto',
+                  'sm:flex-row',
+                  'sm:static',
+                  'sm:gap-x-4',
+                  'sm:mx-4',
+                  'font-medium',
+                  'uppercase',
+                  'tracking-wide',
+                ]}
               >
-                HTMX
-              </a>
-            </li>
-          </ul>
+                {
+                  settings?.header?.headerNavigation?.links?.map((link) => (
+                    <li>
+                      <SanityLink link={link} />
+                    </li>
+                  ))
+                }
+                <li>
+                  <a
+                    href="/search"
+                    class=""
+                    >search
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/htmx"
+                    class=""
+                  >
+                    HTMX
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
         </header>
         <main>
           <slot />

@@ -8,6 +8,10 @@ export default {
       init() {
         console.log('Global store initialized')
         window.addEventListener('scroll', this.onWindowScrollHandler)
+
+        document.addEventListener('astro:before-swap', ev => {
+          this.closeMobileMenu()
+        });
       },
       get bodyClasses() {
         let classes = []
