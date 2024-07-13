@@ -114,26 +114,33 @@ const debugClasses = process.env.NODE_ENV === 'development' ? 'debug-screens' : 
               id="header-nav"
               class:list={[
                 'flex',
+                'sm:!block',
                 'bg-white',
                 'absolute',
-                'flex-col',
                 'w-full',
                 'left-0',
                 'top-full',
-                'shadow-lg'
+                'shadow-lg',
+                'sm:shadow-none',
+                'sm:!h-auto',
+                'sm:static',
               ]}
             >
               <ul
                 class:list={[
+                  'flex',
+                  'flex-col',
                   'space-y-2',
                   'py-4',
+                  'sm:py-0',
                   'border-t',
-                  'items-center',
+                  'items-start',
+                  'sm:items-center	',
+                  'sm:space-y-0',
                   'sm:border-none',
                   'sm:py-0',
                   'sm:w-auto',
                   'sm:flex-row',
-                  'sm:static',
                   'sm:gap-x-4',
                   'sm:mx-4',
                   'font-medium',
