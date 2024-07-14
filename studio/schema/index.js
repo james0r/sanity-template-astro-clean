@@ -28,6 +28,7 @@ import social from "./objects/global/social";
 import notFound from "./objects/global/notFound";
 import imageWithAlt from "./objects/global/imageWithAlt";
 import contentArea from './objects/sections/contentArea'
+import imageContentSplit from './objects/sections/imageContentSplit'
 
 import internalLink from "./objects/global/internalLink";
 import externalLink from "./objects/global/externalLink";
@@ -41,7 +42,8 @@ const objects = [
   internalLink,
   externalLink,
   imageWithAlt,
-  contentArea
+  contentArea,
+  imageContentSplit
 ];
 
 export const schemaTypes = [

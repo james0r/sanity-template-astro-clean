@@ -1,0 +1,17 @@
+---
+import { urlFor } from '../../../utils/image'
+
+const {
+  node: { heading, body, imageWithAlt: { alt, image } },
+} = Astro.props
+---
+
+<div class="flex flex-col-reverse sm:flex-row items-center my-12 gap-12">
+  <div class="prose flex-1">
+    <h2>{heading}</h2>
+    <p>{body}</p>
+  </div>
+  <div class="flex-1">
+    <img src={urlFor(image).width(600).url()} alt={alt} />
+  </div>
+</div>

@@ -2,7 +2,8 @@
   "scripts": {
     "backend-dev": "cd studio && npm run dev",
     "frontend-dev": "cd web && npm run dev",
-    "dev": "concurrently \"npm run backend-dev\" \"npm run frontend-dev\""
+    "dev": "concurrently \"npm run backend-dev\" \"npm run frontend-dev\"",
+    "deploy-backend": "cd studio && sanity deploy"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

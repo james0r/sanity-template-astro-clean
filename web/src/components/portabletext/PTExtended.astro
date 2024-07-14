@@ -1,14 +1,16 @@
 ---
 import PTImage from './PTImage.astro'
-import ContentArea from './sections/ContentArea.astro'
 import { PortableText } from 'astro-portabletext'
+import ContentArea from './sections/ContentArea.astro'
+import ImageContentSplit from './sections/ImageContentSplit.astro'
 
 const { value } = Astro.props
 
 const extraPtComponents = {
   type: {
     bodyImage: PTImage,
-    contentArea: ContentArea
+    contentArea: ContentArea,
+    imageContentSplit: ImageContentSplit,
     // any other .astro extensions
   },
 }

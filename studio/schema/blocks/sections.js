@@ -14,6 +14,11 @@ export default defineType({
       title: "Content Area",
       name: 'contentArea',
       type: 'contentArea'
-    })
+    }),
+    defineArrayMember({
+      title: "Image Content Split",
+      name: 'imageContentSplit',
+      type: 'imageContentSplit'
+    }),
   ],
 });
