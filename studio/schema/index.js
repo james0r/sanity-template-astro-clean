@@ -13,8 +13,12 @@ const singletons = [settings]
 
 // Block Types
 import body from "./blocks/body";
+import sections from "./blocks/sections"
 
-const blocks = [body];
+const blocks = [
+  body,
+  sections
+];
 
 // Object Types
 import header from "./objects/global/header";
@@ -23,6 +27,7 @@ import seo from "./objects/global/seo";
 import social from "./objects/global/social";
 import notFound from "./objects/global/notFound";
 import imageWithAlt from "./objects/global/imageWithAlt";
+import contentArea from './objects/sections/contentArea'
 
 import internalLink from "./objects/global/internalLink";
 import externalLink from "./objects/global/externalLink";
@@ -35,7 +40,8 @@ const objects = [
   notFound,
   internalLink,
   externalLink,
-  imageWithAlt
+  imageWithAlt,
+  contentArea
 ];
 
 export const schemaTypes = [

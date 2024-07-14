@@ -60,5 +60,10 @@ export default defineType({
       name: "bodyImage",
       type: "imageWithAlt"
     }),
+    defineArrayMember({
+      title: "Content Area",
+      name: 'contentArea',
+      type: 'contentArea'
+    })
   ],
 });

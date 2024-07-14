@@ -39,6 +39,11 @@ export default defineType({
       title: "Body",
       type: "body",
     }),
+    defineField({
+      name: "sections",
+      title: "Sections",
+      type: "sections",
+    }),
   ],
   preview: {
     select: {

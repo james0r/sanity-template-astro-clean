@@ -1,5 +1,6 @@
 ---
 import PTImage from './PTImage.astro'
+import ContentArea from './sections/ContentArea.astro'
 import { PortableText } from 'astro-portabletext'
 
 const { value } = Astro.props
@@ -7,6 +8,7 @@ const { value } = Astro.props
 const extraPtComponents = {
   type: {
     bodyImage: PTImage,
+    contentArea: ContentArea
     // any other .astro extensions
   },
 }

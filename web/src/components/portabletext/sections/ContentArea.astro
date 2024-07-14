@@ -1,0 +1,21 @@
+---
+import PTExtended from '../PTExtended.astro'
+const { node: { body, heading } } = Astro.props
+
+---
+
+<div>
+  {
+    heading && (
+      <h2>
+        {heading}
+      </h2>
+    )
+  }
+
+  {
+    body && (
+      <PTExtended value={body} />
+    )
+  }
+</div>

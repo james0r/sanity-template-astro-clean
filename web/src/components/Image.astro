@@ -3,8 +3,8 @@ import { urlFor } from '../utils/image'
 
 export interface Props {
   image: any
-  width: number
-  height: number
+  width?: number
+  height?: number
   classes?: string
   alt: string
 }
@@ -19,8 +19,8 @@ const {
 } = Astro.props
 
 const url = urlFor(image)
-  .width(width)
-  .height(height)
+  // .width(width)
+  // .height(height)
   .url()
 ---
 
